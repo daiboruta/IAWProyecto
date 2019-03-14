@@ -1,0 +1,33 @@
+<div class="wrapper">
+  <mat-card class="formulario" *ngIf="!auth.isLoggedIn()">
+    <section class="mat-typography">
+      <h3>Ingresar</h3>
+    </section>
+    <mat-divider></mat-divider>
+    <br>
+    <form (submit)="login()">
+      <div class="form-group">
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Usuario" name="username" [(ngModel)]="credentials.name" required>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="field-full-width">
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña" name="password" [(ngModel)]="credentials.password" required>
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="primary" type="submit">Ingresar</button>
+      <br><br>
+      ¿No tenés cuenta? <a href="/register">Registrate</a>
+    </form>
+  </mat-card>
+  <mat-card class="formulario" *ngIf="auth.isLoggedIn()">
+    <section class="mat-typography">
+      <h3>¡Ya estás logueado!</h3>
+    </section>
+    <button mat-raised-button class="nav-button" color="accent" (click)="auth.logout()">Salir</button>
+  </mat-card>
+</div>
+
+

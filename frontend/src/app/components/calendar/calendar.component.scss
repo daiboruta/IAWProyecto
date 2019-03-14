@@ -1,0 +1,139 @@
+$dayBase: 8vw;
+$dayBaseHeight: $dayBase * 0.7;
+$cloud:'#ccc';
+$base:5px;
+$concrete:'#fff';
+$seafoam:'blue';
+$white:'#fff';
+$teal:'#1F618D';
+$light-blue-grey:rgb(194, 190, 190);
+$selected-gray:  rgba(12, 79, 180, 0.473);
+
+.calendar {
+  display: block;
+  width: $dayBase * 7;
+  margin: 0 auto;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .calendar-navs {
+    background-color: $cloud;
+  }
+
+  .month-nav {
+    padding: $base;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .year-nav {
+    padding: $base;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .month-grid {
+    .day-names {
+      display: flex;
+      flex-direction: row;
+      background: $concrete;
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+    .weeks {
+      display: flex;
+      flex-direction: column;
+    }
+    .week {
+      display: flex;
+      flex-direction: row;
+    }
+    .week-date,
+    .day-name {
+      padding: $base;
+      display: block;
+      width: $dayBase;
+      //display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .week-date {
+      height: $dayBaseHeight;
+      position: relative;
+      border: 1px solid lightgray;
+      justify-content: left;
+      align-items: baseline;
+
+      .date-text {
+        z-index: 10;
+        font-size: 11px;
+        padding: 0.05 * $dayBase;
+        position: relative;
+      }
+
+      .eventos-lista {
+
+        display: flex;
+      }
+
+      .evento-punto {
+
+        z-index: 10;
+        border-radius: 50%;
+        margin: 2px;
+        height: $dayBaseHeight * 0.1;
+        width: $dayBaseHeight * 0.1;
+        background-color: black;
+        position: relative;
+      }
+
+      &::after {
+        content: '';
+        height: $dayBaseHeight * 0.95;
+        width: $dayBase * 0.95;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 10%;
+        transition: background-color 150ms linear, color 150ms linear;
+        z-index: 1;
+      }
+
+      &.enabled {
+        cursor: pointer;
+        &:hover {
+          &:after {
+            background-color: $selected-gray;
+          }
+        }
+      }
+      &.selected {
+        color: $white;
+        &:after {
+          background-color: $selected-gray;
+        }
+        &:hover {
+          &:after {
+            background-color: $selected-gray;
+          }
+        }
+      }
+
+      &.disabled {
+        background-color: $light-blue-grey;
+      }
+    }
+
+    .today {
+      font-weight: bold;
+    }
+  }
+}

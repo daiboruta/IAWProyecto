@@ -1,0 +1,49 @@
+$dayBaseHeight: 100px;
+
+.grid {
+
+    display: flex;
+    width: 100vw;
+    flex-direction: row;
+}
+
+.columna {
+
+    flex: 1 1 auto;
+}
+
+.interior-tab {
+
+    padding: 5px;
+
+    .titulos {
+
+        font-weight: bold;
+    }
+}
+
+.eventos-lista {
+
+    display: flex;
+}
+
+.evento-punto {
+
+    z-index: 10;
+    border-radius: 50%;
+    margin: 2px;
+    height: $dayBaseHeight * 0.1;
+    width: $dayBaseHeight * 0.1;
+    background-color: black;
+    position: relative;
+}
+
+.botones {
+
+    margin-top: 20px;
+}
+
+.mat-raised-button {
+
+    margin-right: 20px;
+}

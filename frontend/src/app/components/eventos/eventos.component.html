@@ -1,0 +1,46 @@
+<div>
+  <br>
+  <mat-card>
+    <button mat-raised-button color="primary" routerLink="/crear">Crear nuevo evento</button>
+    <br><br>
+    Podés hacer clic sobre cualquier columna para ordenar los eventos
+    <br><br>
+    <mat-divider></mat-divider>
+    <br>
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>
+      <ng-container matColumnDef="fechainicio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha y hora de inicio </th>
+        <td mat-cell *matCellDef="let element"> {{formatearFecha(element.fechainicio)}} </td>
+      </ng-container>
+      <ng-container matColumnDef="fechafin">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha y hora de fin </th>
+        <td mat-cell *matCellDef="let element"> {{formatearFecha(element.fechafin)}} </td>
+      </ng-container>
+      <ng-container matColumnDef="lugar">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Lugar </th>
+        <td mat-cell *matCellDef="let element"> {{element.lugar}} </td>
+      </ng-container>
+      <ng-container matColumnDef="ramas">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ramas </th>
+        <td mat-cell *matCellDef="let element"> {{element.ramas.join(', ')}} </td>
+      </ng-container>
+      <ng-container matColumnDef="creadopor">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Creado por </th>
+        <td mat-cell *matCellDef="let element"> {{element.creadopor}} </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="mat-column-right"> Acciones </th>
+          <td mat-cell *matCellDef="let element" class="mat-column-right">
+            <button mat-button color="primary" (click)="editarEvento(element._id)">Editar</button>
+            <button mat-button color="warn" (click)="eliminarEvento(element._id, element.nombre)">Eliminar</button>
+          </td>
+        </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>

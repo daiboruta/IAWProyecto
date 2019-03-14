@@ -1,0 +1,99 @@
+<div class="grid">
+  <div class="columna meses">
+    <app-calendar #calendario (onSelectDate)="onSelectDate($event)"></app-calendar>
+  </div>
+  <div class="columna tabs">
+    <div class="tabs-container" #tabs>
+      <mat-tab-group [selectedIndex] = "tabseleccionada">
+        <mat-tab label="{{ getFecha() }}">
+          <div *ngIf="fecha == null">
+            <div class="interior-tab">
+              <mat-card>
+                Elija una fecha para ver los eventos
+              </mat-card>
+            </div>
+          </div>
+          <div *ngIf="fecha != null">
+            <div class="interior-tab">
+              <div *ngIf="(fecha.eventos | async)?.length == 0">
+                <mat-card>
+                  No hay eventos para mostrar en esta fecha.
+                </mat-card>
+              </div>
+              <mat-accordion>
+                <div *ngFor= "let evento of fecha.eventos | async">
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                          <div *ngFor= "let categoria of evento.ramas" class="eventos-lista">
+                              <div class="evento-punto" matTooltip="{{categoria}}" [ngStyle]="{'background-color': getColor(categoria)}"></div>
+                          </div>
+                          {{evento.nombre}}
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="contenido-evento">
+                      <span class="titulos">Fecha y hora de inicio:</span> {{formatearFecha(evento.fechainicio)}}<br>
+                      <span class="titulos">Fecha y hora de fin:</span> {{formatearFecha(evento.fechafin)}}<br>
+                      <span class="titulos">Lugar:</span> {{evento.lugar}}<br>
+                      <span class="titulos">Creado por:</span> {{evento.creadopor}}<br>
+                      <div class="botones">
+                        <button mat-raised-button color="primary" (click)="editar(evento)">Editar</button>
+                        <button mat-raised-button color="warn" (click)="eliminarEvento(evento._id, evento.nombre)">Eliminar</button>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </div>
+              </mat-accordion>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Próximos eventos" isActive="true">
+            <div class="interior-tab">
+                <div *ngIf="(proxeventos)?.length == 0">
+                  <mat-card>
+                    No hay eventos dentro del próximo mes.
+                  </mat-card>
+                </div>
+                <mat-accordion>
+                  <div *ngFor= "let evento of proxeventos">
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <div *ngFor= "let categoria of evento.ramas" class="eventos-lista">
+                                <div class="evento-punto" matTooltip="{{categoria}}" [ngStyle]="{'background-color': getColor(categoria)}"></div>
+                            </div>
+                            {{evento.nombre}}
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div class="contenido-evento">
+                        <span class="titulos">Fecha y hora de inicio:</span> {{formatearFecha(evento.fechainicio)}}<br>
+                        <span class="titulos">Fecha y hora de fin:</span> {{formatearFecha(evento.fechafin)}}<br>
+                        <span class="titulos">Lugar:</span> {{evento.lugar}}<br>
+                        <span class="titulos">Creado por:</span> {{evento.creadopor}}<br>
+                        <div class="botones">                        
+                          <button mat-raised-button color="primary" (click)="editar(evento)">Editar</button>
+                          <button mat-raised-button color="warn" (click)="eliminarEvento(evento._id, evento.nombre)">Eliminar</button>
+                        </div>
+                      </div>
+                    </mat-expansion-panel>
+                  </div>
+                </mat-accordion>
+                <div class="botones">
+                  <button mat-raised-button color="accent" routerLink="/eventos">Ver todos los eventos</button>
+                </div>
+              </div>
+        </mat-tab>
+        <mat-tab label="Crear/editar">
+          <div class="botones">
+              <button mat-raised-button color="accent" (click)="crear()">Crear evento nuevo</button>
+          </div>
+          <div #editor>
+
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+
+

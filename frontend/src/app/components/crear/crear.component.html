@@ -1,0 +1,74 @@
+<div class="wrapper">
+  <br>
+  <mat-card class="formulario">
+    <section class="mat-typography">
+      <h3>Crear un nuevo evento</h3>
+    </section>
+    <mat-divider></mat-divider>
+    <br>
+    <form [formGroup]="createForm" class="create-form">
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Evento o actividad" [formControl]="nombre" #title>
+      </mat-form-field>
+      <br>
+      <mat-form-field class="fecha">
+        <input matInput [matDatepicker]="pickerinicio" placeholder="Fecha de inicio" [formControl]='fechainicio'>
+        <mat-datepicker-toggle matSuffix [for]="pickerinicio"></mat-datepicker-toggle>
+        <mat-datepicker #pickerinicio></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="hora">
+        <input matInput type="time" [formControl]='horainicio' placeholder="Hora de inicio">
+      </mat-form-field>
+      <br>
+      <mat-form-field class="fecha">
+        <input matInput [matDatepicker]="pickerfin" placeholder="Fecha de fin" [formControl]='fechafin'>
+        <mat-datepicker-toggle matSuffix [for]="pickerfin"></mat-datepicker-toggle>
+        <mat-datepicker #pickerfin></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="hora">
+        <input matInput type="time" [formControl]='horafin' placeholder="Hora de fin">
+      </mat-form-field>
+      <br>
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Lugar" formControlName="lugar" #responsible>
+      </mat-form-field>
+      <br>
+      <mat-form-field class="chip-list">
+        <mat-chip-list #chipList>
+          <mat-chip
+            *ngFor="let rama of ramas"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(rama)">
+            {{rama}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Categorías..."
+            #ramasInput
+            formControlName="ramasCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let rama of filteredRamas | async" [value]="rama">
+            {{rama}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <br>
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Creado por" formControlName="creadopor">
+      </mat-form-field>
+      <mat-divider></mat-divider>
+      <br><br>
+      <div *ngIf="volveraeventos">
+          <button mat-raised-button color="accent" routerLink="/eventos">Atrás</button>
+      </div>
+      <button type="submit" (click)="crearEvento()" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Guardar</button>
+    </form>
+  </mat-card>
+</div>
